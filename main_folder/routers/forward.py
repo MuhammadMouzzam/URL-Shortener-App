@@ -21,7 +21,7 @@ def forward_to_URL(url_key : str, db : Session = Depends(get_db)):
 
 @router.get('/{url_key}/peek', response_model=schemas.URL)
 def peek_at_URL(url_key : str, db : Session = Depends(get_db)):
-    db_url = db.query(models.URL).filter(models.URL.url_key == url_key, models.URL.is_active).first()
+    db_url = db.query(models.URL).filter(models.URL.url_key == url_key).first()
     if not db_url:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail=f"Shortened URL ({url_key}) does not exist")
     return db_url
